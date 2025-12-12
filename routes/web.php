@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AdminController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AdminController::class, 'dashboard'])-> name('admin.dashboard');
+Route::get('/manage-student', [StudentController::class, 'index'])-> name('admin.managestudent');
+Route::get('/add-student', [StudentController::class, 'create'])-> name('admin.addstudent');
+Route::post('/store-student', [StudentController::class, 'store'])-> name('admin.storestudent');
+
+
+Route::get('/register', [UserController::class, 'create'])-> name('auth.register');
+Route::post('/save', [UserController::class, 'store'])-> name('auth.store');
 

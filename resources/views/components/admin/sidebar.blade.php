@@ -26,7 +26,9 @@
                 <div class="menu-title">Students</div>
               </a>
               <ul>
-                <li> <a href="{{ route('admin.managestudent') }}"><i class="bi bi-circle"></i>Manage Students </a>
+                <li> <a href="{{ route('admin.students.create') }}"><i class="bi bi-circle"></i>Add Students </a>
+                </li>
+                <li> <a href="{{ route('admin.students.index') }}"><i class="bi bi-circle"></i>Manage Students </a>
                 </li>
                 <li> <a href="app-chat-box.html"><i class="bi bi-circle"></i>Student Attendance</a>
                 </li>

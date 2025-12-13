@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             //Basic details
+            $table->string('student_id')->unique()->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('gender', ['male', 'female', 'other'])->nullable();

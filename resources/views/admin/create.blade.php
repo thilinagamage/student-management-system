@@ -18,7 +18,7 @@
           <hr>
 
           <!-- SINGLE FORM START -->
-          <form class="row g-3" action="{{ route('admin.storestudent') }}" method="POST" enctype="multipart/form-data">
+          <form class="row g-3" action="{{ route('admin.students.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- USER INFORMATION -->

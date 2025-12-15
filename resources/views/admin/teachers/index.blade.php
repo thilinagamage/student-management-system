@@ -38,33 +38,33 @@
                          </tr>
                        </thead>
                        <tbody>
-                        @foreach ( $students as $student )
+                        @foreach ( $teachers as $teacher )
                          <tr>
-                          <td>{{ $loop->iteration + ($students->currentPage()-1) * $students->perPage() }}</td>
-                          <td>{{ $student->student_id }}</td>
+                          <td>{{ $loop->iteration + ($teachers->currentPage()-1) * $teachers->perPage() }}</td>
+                          <td>{{ $teacher->teacher_code }}</td>
                            <td>
                              <div class="d-flex align-items-center gap-3 cursor-pointer">
-                                @if($student->profile_image)
-                                    <img src="{{ asset('storage/'.$student->profile_image) }}"
+                                {{-- @if($teacher->profile_image)
+                                    <img src="{{ asset('storage/'.$teacher->profile_image) }}"
                                         width="50" height="50"
                                         style="border-radius:50%">
                                 @else
                                     <img src="{{ asset() }}"
                                         width="50" height="50">
-                                @endif
+                                @endif --}}
 
-                            <td>{{ $student->first_name . ' ' . $student->last_name }}</td>
+                            <td>{{ $teacher->first_name . ' ' . $teacher->last_name }}</td>
                              </div>
                            </td>
-                           <td>{{ $student->address }}</td>
-                           <td>{{ $student->course }}</td>
-                           <td>{{ $student->phone_number }}</td>
-                           <td>{{ $student->email }}</td>
+                           <td>{{ $teacher->address }}</td>
+                           <td>{{ $teacher->course }}</td>
+                           <td>{{ $teacher->phone }}</td>
+                           <td>{{ $teacher->email }}</td>
                            <td>
                              <div class="table-actions d-flex align-items-center gap-3 fs-6">
-                               <a href="{{ route('admin.students.view',$student->id) }}" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Views"><i class="bi bi-eye-fill"></i></a>
-                               <a href="{{ route('admin.students.edit',$student->id) }}" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-                               <a href="{{ route('admin.students.delete',$student->id) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
+                               <a href="{{ route('admin.teachers.view',$teacher->id) }}" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Views"><i class="bi bi-eye-fill"></i></a>
+                               <a href="{{ route('admin.teachers.edit',$teacher->id) }}" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                               <a href="{{ route('admin.teachers.delete',$teacher->id) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
                              </div>
                            </td>
                          </tr>
@@ -73,7 +73,7 @@
                      </table>
                      <!-- Pagination Links -->
                     <div class="mt-3">
-                        {{ $students->links('pagination::bootstrap-5') }}
+                        {{ $teachers->links('pagination::bootstrap-5') }}
                     </div>
 
                    </div>

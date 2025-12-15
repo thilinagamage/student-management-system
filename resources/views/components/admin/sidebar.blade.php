@@ -30,7 +30,7 @@
                 </li>
                 <li> <a href="{{ route('admin.students.index') }}"><i class="bi bi-circle"></i>Manage Students </a>
                 </li>
-                <li> <a href="app-chat-box.html"><i class="bi bi-circle"></i>Student Attendance</a>
+                <li> <a href="{{ route('admin.attendance.student.create') }}"><i class="bi bi-circle"></i>Student Attendance</a>
                 </li>
                 <li> <a href="app-file-manager.html"><i class="bi bi-circle"></i>Student Results </a>
                 </li>
@@ -50,7 +50,9 @@
                 <div class="menu-title">Teachers</div>
               </a>
               <ul>
-                <li> <a href="widgets-static-widgets.html"><i class="bi bi-circle"></i>Manage Teachers</a>
+                <li> <a href="{{ route('admin.teachers.index') }}"><i class="bi bi-circle"></i>Manage Teachers</a>
+                </li>
+                <li> <a href="{{ route('admin.teachers.create') }}"><i class="bi bi-circle"></i>Add Teachers</a>
                 </li>
                 <li> <a href="widgets-data-widgets.html"><i class="bi bi-circle"></i>Assign Subjects / Batches</a>
                 </li>
@@ -65,7 +67,13 @@
                 <div class="menu-title">Courses / Programs</div>
               </a>
               <ul>
-                <li> <a href="ecommerce-products-list.html"><i class="bi bi-circle"></i>Manage Courses</a>
+                <li> <a href="{{ route('admin.courses.create') }}"><i class="bi bi-circle"></i>Add Courses</a>
+                </li>
+                <li> <a href="{{ route('admin.courses.index') }}"><i class="bi bi-circle"></i>Manage Courses</a>
+                </li>
+                <li> <a href="{{ route('admin.course-types.create') }}"><i class="bi bi-circle"></i>Add Courses Types</a>
+                </li>
+                <li> <a href="{{ route('admin.course-types.index') }}"><i class="bi bi-circle"></i>Manage Course Types</a>
                 </li>
                 <li> <a href="ecommerce-products-grid.html"><i class="bi bi-circle"></i>Manage Batches</a>
                 </li>

@@ -2,6 +2,7 @@
 
 namespace App\Models\People;
 
+use App\Models\Attendance\StudentAttendance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,11 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(StudentAttendance::class);
     }
 
 }

@@ -103,6 +103,14 @@ class CourseController extends Controller
             ->with('success', 'Course updated successfully');
     }
 
+    public function view($id)
+    {
+        $course = Course::findOrFail($id);
+
+        return view('admin.course.view', compact('course'));
+    }
+
+
     /**
      * Delete course (soft delete recommended)
      */

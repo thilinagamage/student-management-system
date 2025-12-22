@@ -27,4 +27,15 @@ class Course extends Model
     {
         return $this->belongsTo(CourseType::class);
     }
+    
+        public function subjects()
+    {
+        return $this->hasMany(Subjects::class);
+    }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
+
 }

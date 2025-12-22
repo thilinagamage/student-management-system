@@ -76,21 +76,10 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('admin.courses.edit', $course->id) }}"
-                                               class="btn btn-sm btn-warning">
-                                                Edit
-                                            </a>
+                               <a href="{{ route('admin.courses.view',$course->id) }}" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Views"><i class="bi bi-eye-fill"></i></a>
+                               <a href="{{ route('admin.courses.edit',$course->id) }}" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                               <a href="{{ route('admin.courses.delete',$course->id) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
 
-                                            <form action=""
-                                                  method="POST"
-                                                  class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Are you sure?')">
-                                                    Delete
-                                                </button>
-                                            </form>
                                         </td>
                                     </tr>
                                 @empty

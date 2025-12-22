@@ -30,12 +30,21 @@
                 </li>
                 <li> <a href="{{ route('admin.students.index') }}"><i class="bi bi-circle"></i>Manage Students </a>
                 </li>
-                <li> <a href="{{ route('admin.attendance.student.create') }}"><i class="bi bi-circle"></i>Student Attendance</a>
-                </li>
                 <li> <a href="app-file-manager.html"><i class="bi bi-circle"></i>Student Results </a>
                 </li>
-                <li> <a href="app-to-do.html"><i class="bi bi-circle"></i>Enroll Student to Batch</a>
+              <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Enroll Student to Batch</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.student-enrollment.create') }}"><i class="bi bi-circle"></i> Create Enrollment</a>
                 </li>
+                <li> <a href="{{ route('admin.student-enrollment.index') }}"><i class="bi bi-circle"></i> View Enrollment</a>
+                </li>
+              </ul>
+            </li>
                 <li> <a href="app-invoice.html"><i class="bi bi-circle"></i>Student Documents</a>
                 </li>
                 <li> <a href="app-fullcalender.html"><i class="bi bi-circle"></i>Graduation / Alumni</a>
@@ -67,20 +76,69 @@
                 <div class="menu-title">Courses / Programs</div>
               </a>
               <ul>
-                <li> <a href="{{ route('admin.courses.create') }}"><i class="bi bi-circle"></i>Add Courses</a>
-                </li>
                 <li> <a href="{{ route('admin.courses.index') }}"><i class="bi bi-circle"></i>Manage Courses</a>
                 </li>
-                <li> <a href="{{ route('admin.course-types.create') }}"><i class="bi bi-circle"></i>Add Courses Types</a>
+                <li> <a href="{{ route('admin.courses.create') }}"><i class="bi bi-circle"></i>Add Courses</a>
                 </li>
                 <li> <a href="{{ route('admin.course-types.index') }}"><i class="bi bi-circle"></i>Manage Course Types</a>
                 </li>
-                <li> <a href="ecommerce-products-grid.html"><i class="bi bi-circle"></i>Manage Batches</a>
+                <li> <a href="{{ route('admin.course-types.create') }}"><i class="bi bi-circle"></i>Add Courses Types</a>
                 </li>
-                <li> <a href="ecommerce-products-categories.html"><i class="bi bi-circle"></i>Manage Subjects</a>
+                {{-- <li> <a href="{{ route('admin.batches.index') }}"><i class="bi bi-circle"></i>Manage Batches</a>
                 </li>
-                <li> <a href="ecommerce-orders.html"><i class="bi bi-circle"></i>Assign Teachers</a>
+                <li> <a href="{{ route('admin.batches.create') }}"><i class="bi bi-circle"></i>Add Batches</a>
+                </li> --}}
+
+            <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Manage Batches</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.batches.index') }}"><i class="bi bi-circle"></i>Manage Batches</a>
                 </li>
+                <li> <a href="{{ route('admin.batches.create') }}"><i class="bi bi-circle"></i>Add Batches</a>
+                </li>
+
+              </ul>
+            </li>
+
+                {{-- <li> <a href="{{ route('admin.subjects.index') }}"><i class="bi bi-circle"></i>Manage Subjects</a>
+                </li>
+                <li> <a href="{{ route('admin.subjects.create') }}"><i class="bi bi-circle"></i>Add Subjects</a>
+                </li> --}}
+            <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Manage Subjects</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.subjects.index') }}"><i class="bi bi-circle"></i>Manage Subjects</a>
+                </li>
+                <li> <a href="{{ route('admin.subjects.create') }}"><i class="bi bi-circle"></i>Add Subjects</a>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Manage Teachers Assignments</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.teacher-assignments.index') }}"><i class="bi bi-circle"></i> Teachers Assignments</a>
+                </li>
+                <li> <a href="{{ route('admin.teacher-assignments.create') }}"><i class="bi bi-circle"></i>Add Teachers Assignments</a>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+
+
 
               </ul>
             </li>
@@ -91,10 +149,40 @@
                 <div class="menu-title">Attendance</div>
               </a>
               <ul>
-                <li> <a href="component-alerts.html"><i class="bi bi-circle"></i>Mark Attendance</a>
+            <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Teacher Attendance</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.teacher-attendance.index') }}"><i class="bi bi-circle"></i> View Teacher Attendance</a>
                 </li>
-                <li> <a href="component-accordions.html"><i class="bi bi-circle"></i>Attendance Reports</a>
+                <li> <a href="{{ route('admin.teacher-attendance.create') }}"><i class="bi bi-circle"></i> Mark Teacher Attendance</a>
                 </li>
+                 <li> <a href="{{ route('admin.teacher-attendance.report') }}"><i class="bi bi-circle"></i>Attendance Reports</a>
+                </li>
+
+              </ul>
+            </li>
+            <li>
+              <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bi bi-music-note-list"></i>
+                </div>
+                <div class="menu-title">Student Attendance</div>
+              </a>
+              <ul>
+                <li> <a href="{{ route('admin.student-attendance.create') }}"><i class="bi bi-circle"></i> Mark Student Attendance</a>
+                </li>
+                <li> <a href="{{ route('admin.student-attendance.index') }}"><i class="bi bi-circle"></i> View Student Attendance</a>
+                </li>
+                 <li> <a href="{{ route('admin.student-attendance.report') }}"><i class="bi bi-circle"></i>Attendance Reports</a>
+                </li>
+                <li> <a href="{{ route('admin.student-attendance.batch-report') }}"><i class="bi bi-circle"></i>Batch Attendance Reports</a>
+                </li>
+
+              </ul>
+            </li>
                 <li> <a href="component-badges.html"><i class="bi bi-circle"></i>Attendance Calendar</a>
                 </li>
                             </ul>

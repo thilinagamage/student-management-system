@@ -19,6 +19,15 @@
 
                     <h5 class="mb-0">Create New Course</h5>
                     <hr>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
                     <form class="row g-3"
                           action="{{ route('admin.courses.store') }}"

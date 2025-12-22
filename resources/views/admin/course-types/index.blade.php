@@ -20,28 +20,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($courseTypes as $type)
+            @foreach($courseTypes as $courseType)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $type->type_name }}</td>
+                <td>{{ $courseType->type_name }}</td>
                 <td>
-                    <span class="badge bg-{{ $type->status=='active'?'success':'danger' }}">
-                        {{ ucfirst($type->status) }}
+                    <span class="badge bg-{{ $courseType->status=='active'?'success':'danger' }}">
+                        {{ ucfirst($courseType->status) }}
                     </span>
                 </td>
                 <td>
-                    <a href="{{ route('admin.course-types.edit',$type->id) }}"
-                       class="btn btn-sm btn-warning">Edit</a>
+                               <a href="{{ route('admin.course-types.view',$courseType->id) }}" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Views"><i class="bi bi-eye-fill"></i></a>
+                               <a href="{{ route('admin.course-types.edit',$courseType->id) }}" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i class="bi bi-pencil-fill"></i></a>
+                               <a href="{{ route('admin.course-types.delete',$courseType->id) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
 
-                    <form action=""
-                          method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger"
-                            onclick="return confirm('Delete this course type?')">
-                            Delete
-                        </button>
-                    </form>
                 </td>
             </tr>
             @endforeach

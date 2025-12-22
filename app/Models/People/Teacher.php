@@ -2,6 +2,9 @@
 
 namespace App\Models\People;
 
+use App\Models\Academic\Subjects;
+use App\Models\Academic\TeacherAssignment;
+use App\Models\TeacherAttendance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,4 +42,15 @@ class Teacher extends Model
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(TeacherAssignment::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(TeacherAttendance::class);
+    }
+
 }

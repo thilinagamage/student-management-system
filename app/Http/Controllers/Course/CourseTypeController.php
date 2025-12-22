@@ -47,23 +47,40 @@ class CourseTypeController extends Controller
         return view('admin.course-types.edit', compact('courseType'));
     }
 
-    // UPDATE
     public function update(Request $request, CourseType $courseType)
     {
-        $request->validate([
-            'type_name' => 'required|unique:course_types,type_name,' . $courseType->id,
-            'status'    => 'required',
+        try{
+             $request->validate([
+            'type_name'   => 'required|string|max:255|unique:course_types,type_name,' . $courseType->id,
+            'description' => 'nullable|string',
+            'status'      => 'required|in:active,inactive',
         ]);
 
-        $courseType->update($request->all());
+        $courseType->update([
+            'type_name'   => $request->type_name,
+            'description' => $request->description,
+            'status'      => $request->status,
+        ]);
 
         return redirect()
             ->route('admin.course-types.index')
             ->with('success', 'Course Type updated successfully');
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'An error occurred while updating the Course Type: ' . $e->getMessage());
+        }
+    }
+
+    // VIEW
+    public function view(CourseType $courseType)
+    {
+        return view('admin.course-types.view', compact('courseType'));
     }
 
     // DELETE
-    public function destroy(CourseType $courseType)
+    public function delete(CourseType $courseType)
     {
         $courseType->delete();
 

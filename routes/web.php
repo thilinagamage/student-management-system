@@ -12,6 +12,8 @@ use App\Http\Controllers\Course\SubjectController;
 use App\Http\Controllers\Course\TeacherAssignmentController;
 use App\Http\Controllers\Teacher\TeacherController;
 use App\Http\Controllers\Attendance\TeacherAttendanceController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +27,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AdminController::class, 'dashboard'])-> name('admin.dashboard');
+
+
+Route::get('/admin', [AdminController::class, 'dashboard'])-> name('admin.dashboard');
 
 Route::prefix('student')->group(function(){
+Route::middleware('auth:student')->group(function(){
+        Route::get('/dashboard', [AdminController::class, 'studentDashboard'])-> name('student.dashboard');
+    });
+
     Route::get('/', [StudentController::class, 'index'])-> name('admin.students.index');
     Route::get('/create', [StudentController::class, 'create'])-> name('admin.students.create');
     Route::post('/save', [StudentController::class, 'store'])-> name('admin.students.store');
@@ -149,6 +157,9 @@ Route::prefix('teacher-attendance')->group(function(){
 });
 
 
-Route::get('/register', [UserController::class, 'create'])-> name('register');
-Route::post('/register', [UserController::class, 'store'])-> name('store');
+Route::get('/register', [UserController::class, 'create'])-> name('auth.register');
+Route::post('/register', [UserController::class, 'store'])-> name('auth.store');
+Route::get('/', [LoginController::class, 'showLoginForm'])-> name('auth.login');
+Route::post('/login-check', [LoginController::class, 'login'])-> name('auth.login.check');
 
+Route::get('/search', [SearchController::class, 'index'])->name('admin.search');

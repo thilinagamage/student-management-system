@@ -6,7 +6,7 @@
 
  <!--start wrapper-->
   <div class="wrapper">
-    
+
        <!--start content-->
        <main class="authentication-content">
         <div class="container-fluid">
@@ -82,7 +82,7 @@
                             </div>
                           </div>
                           <div class="col-12">
-                            <p class="mb-0">Already have an account? <a href="authentication-signin.html">Sign up here</a></p>
+                            <p class="mb-0">Already have an account? <a href="{{ route('auth.login') }}">Sign up here</a></p>
                           </div>
                         </div>
                     </form>
@@ -93,7 +93,7 @@
           </div>
         </div>
        </main>
-        
+
        <!--end page main-->
 
   </div>

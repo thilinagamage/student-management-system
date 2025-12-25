@@ -50,5 +50,14 @@ class User extends Authenticatable
         return $this->hasOne(\App\Models\People\Student::class);
     }
 
+    public function teacher()
+    {
+        return $this->hasOne(\App\Models\People\Teacher::class);
+    }
+
+    public function isTeacher()
+    {
+        return $this->user_type === 'teacher';
+    }
 
 }

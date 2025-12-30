@@ -4,6 +4,7 @@ namespace App\Models\Academic;
 
 use App\Models\People\Student;
 use App\Models\Attendance\TeacherAttendance;
+use App\Models\People\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,17 +33,11 @@ class Batch extends Model
         return $this->belongsTo(Course::class);
     }
 
-
-
     public function subjects()
     {
-        return $this->belongsToMany(
-            Subjects::class,
-            'batch_subjects',
-            'batch_id',
-            'subjects_id'
-        );
+        return $this->belongsToMany(Subjects::class,'batch_subjects','batch_id','subjects_id');
     }
+
     public function teacherAssignments()
     {
         return $this->hasMany(TeacherAssignment::class);
@@ -56,13 +51,13 @@ class Batch extends Model
 
     public function students()
     {
-        return $this->belongsToMany(
-            Student::class,
-            'batch_student',
-            'batch_id',
-            'student_id'
-        )->withPivot('status');
+        return $this->belongsToMany(Student::class,'batch_student','batch_id','student_id')->withPivot('status');
     }
 
+
+    public function teachers()
+    {
+        return $this->belongsToMany(Teacher::class,'batch_teacher');
+    }
 
 }

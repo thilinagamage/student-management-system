@@ -21,11 +21,7 @@
                 </button>
             </form>
 
-            <form class="searchbar">
-                <div class="position-absolute top-50 translate-middle-y search-icon ms-3"><i class="bi bi-search"></i></div>
-                <input class="form-control" type="text" placeholder="Type here to search">
-                <div class="position-absolute top-50 translate-middle-y search-close-icon"><i class="bi bi-x-lg"></i></div>
-            </form>
+
             <div class="top-navbar-right ms-auto">
               <ul class="navbar-nav align-items-center gap-1">
                 <li class="nav-item search-toggle-icon d-flex d-lg-none">
@@ -44,13 +40,26 @@
                        @php
                             $user = auth()->user();
                         @endphp
+                        @php
+                            $user = auth()->user();
+                            $profileImage = 'default-avatar.png'; // fallback image
+
+                            if ($user) {
+                                if ($user->user_type === 'student' && $user->student) {
+                                    $profileImage = $user->student->profile_image;
+                                } elseif ($user->user_type === 'teacher' && $user->teacher) {
+                                    $profileImage = $user->teacher->profile_image;
+                                }
+                            }
+                        @endphp
+
                         <img
-                            src="{{ $user && $user->profile_image
-                                ? asset('storage/'.$user->profile_image)
-                                : asset('assets/images/default-user.png') }}"
+                            src="{{ asset('storage/' . $profileImage) }}"
                             class="user-img"
                             alt="User"
                         />
+
+
                       <div class="d-none d-sm-block">
                         @if($user)
                             <p class="user-name mb-0">{{ $user->username ?? 'User' }}</p>
@@ -65,7 +74,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                    <li>
-                      <a class="dropdown-item" href="pages-user-profile.html">
+                      <a class="dropdown-item" href="{{ route('profile') }}">
                          <div class="d-flex align-items-center">
                            <div class=""><i class="bi bi-person-fill"></i></div>
                            <div class="ms-3"><span>Profile</span></div>
@@ -106,12 +115,12 @@
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                      <a class="dropdown-item" href="authentication-signup-with-header-footer.html">
-                         <div class="d-flex align-items-center">
-                           <div class=""><i class="bi bi-lock-fill"></i></div>
-                           <div class="ms-3"><span>Logout</span></div>
-                         </div>
-                       </a>
+<form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button class="dropdown-item text-danger" type="submit">
+                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </button>
+            </form>
                     </li>
                 </ul>
               </div>

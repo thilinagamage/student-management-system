@@ -25,7 +25,7 @@
                         method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        
 
                         <input type="hidden" name="id" value="{{ $teacher->id }}">
 

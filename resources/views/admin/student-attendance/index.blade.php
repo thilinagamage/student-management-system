@@ -138,9 +138,8 @@
                                     {{ $attendance->remarks ?? '-' }}
                                 </td>
                                 <td>
-                               <a href="" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Views"><i class="bi bi-eye-fill"></i></a>
                                <a href="{{ route('admin.student-attendance.edit', [$attendance->batch_id, $attendance->attendance_date]) }}" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"><i class="bi bi-pencil-fill"></i></a>
-                               <a href="{{ route('admin.student-attendance.destroy.single', $attendance->id) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
+                               <a href="{{ route('admin.student-attendance.delete', [$attendance->batch_id, $attendance->attendance_date]) }}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"><i class="bi bi-trash-fill"></i></a>
 
                                 </td>
                             </tr>
@@ -157,7 +156,7 @@
                 </div>
             </div>
         </div>
-
+`
     </div>
 </div>
 

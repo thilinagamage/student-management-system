@@ -23,13 +23,22 @@ class LoginController extends Controller
         $credentials = [
             'login_email' => $request->login_email,
             'password'    => $request->password,
+            'status'      => 'active',
         ];
 
-       
-        if (Auth::guard('student')->attempt($credentials, $request->filled('remember'))) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+
             $request->session()->regenerate();
 
-            return redirect()->route('student.dashboard');
+            $user = Auth::user();
+
+            return match ($user->user_type) {
+                'admin'        => redirect()->route('admin.dashboard'),
+                'teacher'      => redirect()->route('teacher.dashboard'),
+                'student'      => redirect()->route('student.dashboard'),
+                'receptionist' => redirect()->route('reception.dashboard'),
+                default        => $this->logoutAndRedirect($request),
+            };
         }
 
         return back()->withErrors([
@@ -37,7 +46,7 @@ class LoginController extends Controller
         ]);
     }
 
-    public function logout(Request $request)
+    public function logoutAndRedirect(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();

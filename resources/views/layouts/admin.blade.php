@@ -2,7 +2,17 @@
 
 <div class="wrapper">
 @include('components.admin.navbar')
-@include('components.admin.sidebar')
+
+    @if(Auth::check() && Auth::user()->user_type === 'superadmin')
+        @include('components.admin.sidebar')
+    @elseif(Auth::check() && Auth::user()->user_type === 'admin')
+        @include('components.admin.sidebar')
+    @elseif(Auth::check() && Auth::user()->user_type === 'student')
+        @include('components.students.sidebar')
+    @elseif(Auth::check() && Auth::user()->user_type === 'teacher')
+        @include('components.teachers.sidebar')
+    @endif
+
 </div>
 @yield('content')
 

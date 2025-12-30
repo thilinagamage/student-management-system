@@ -466,15 +466,15 @@ a {
 }
 
 .sidebar-wrapper .sidebar-header .logo-icon {
-    width: 35px;
+    width: 50px;
 }
 
 .sidebar-wrapper .sidebar-header  .logo-text {
-    font-size: 24px;
+    font-size: 20px;
     margin-left: 10px;
     margin-bottom: 0;
     letter-spacing: 1px;
-    color: #3461ff;
+    color: #ffffff;
 }
 
 .toggle-icon {

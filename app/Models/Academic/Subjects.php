@@ -3,7 +3,9 @@
 namespace App\Models\Academic;
 
 use App\Models\Attendance\TeacherAttendance;
-use Illuminate\Bus\Batch;
+use App\Models\Academic\Batch;
+use App\Models\Academic\Course;
+use App\Models\Academic\TeacherAssignment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

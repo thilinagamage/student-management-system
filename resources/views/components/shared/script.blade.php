@@ -20,3 +20,9 @@
 <script>
     new PerfectScrollbar(".best-product");
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('#menu').metisMenu();
+    });
+</script>

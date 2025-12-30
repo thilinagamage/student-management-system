@@ -2,9 +2,11 @@
 
 namespace App\Models\People;
 
+use App\Models\Academic\Batch;
 use App\Models\Academic\Subjects;
 use App\Models\Academic\TeacherAssignment;
-use App\Models\TeacherAttendance;
+use App\Models\Attendance\TeacherAttendance;
+
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,5 +54,10 @@ class Teacher extends Model
     {
         return $this->hasMany(TeacherAttendance::class);
     }
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class,'batch_teacher');
+    }
+
 
 }

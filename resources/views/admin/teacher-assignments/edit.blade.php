@@ -25,7 +25,8 @@
                       action="{{ route('admin.teacher-assignments.update', $assignment->id) }}"
                       method="POST">
                     @csrf
-                 
+                    @method('PUT')
+
 
                     <!-- ASSIGNMENT INFO -->
                     <div class="card shadow-none border mb-3">

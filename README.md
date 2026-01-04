@@ -8,11 +8,31 @@ A simple Java-based console application for managing student records with file-b
 -  Admin, Teacher, Student user roles
 -  Secure login & logout
 -  Rolebased access using middleware
-- **View Students**: Display all registered students in a formatted table
-- **Update Student**: Modify existing student information
-- **Delete Student**: Remove student records from the system
-- **Data Persistence**: All student data is automatically saved to and loaded from a text file
-- **Search Functionality**: Find students by their unique ID
+  
+- **Student Management**:
+- Create, Update, View and Delete students
+- Store personal and academic information
+- Assign students to course and batches
+- Student profile management
+ 
+- **Course & Batch Management**:
+- Create and manage course / programs
+- Create batches linked to course
+- Batch codes and academic timelines
+  
+- **Student Enrollment Module**:
+-  Enroll student into one or multiple batches
+-  Prevent duplicate enrollments
+-  view enrolled batches per student
+-  Enrollment tracking
+    
+- **Teacher Management**:
+- Manage teacher profiiles
+- Assdign teachers to course / batches
+  
+- *Attendance Management*:
+- 
+- 
 - **Input Validation**: Robust error handling for user inputs
 
 ## Technologies Used

@@ -28,6 +28,8 @@ A simple Java-based console application for managing student records with file-b
 1. Clone the repository:
    ```bash
    git clone https://github.com/thilinagamage/student-management-system.git
+
+ ```bash
 git clone https://github.com/your-username/student-management-system.git
 cd student-management-system
 

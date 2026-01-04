@@ -25,7 +25,6 @@ A simple Java-based console application for managing student records with file-b
 
 ## Installation
 
-    ```bash
     git clone https://github.com/thilinagamage/student-management-system.git
     cd student-management-system
     
@@ -42,8 +41,15 @@ A simple Java-based console application for managing student records with file-b
 
 ## Demo Admin Account
 
-    ```bash
     Email : superadmin@system.com
     password: password
+
+## 👨‍💻 Author
+
+Thilina Gamage
+Laravel & WordPress Developer
+📍 Sri Lanka
+
+GitHub: https://github.com/thilinagamage
 
 

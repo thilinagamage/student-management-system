@@ -5,9 +5,9 @@ A simple Java-based console application for managing student records with file-b
 ## Features
 
 - **Authenticarion & Roles**:
-  Admin, Teacher, Student user roles
-  Secure login & logout
-  Rolebased access using middleware
+Admin, Teacher, Student user roles
+Secure login & logout
+Rolebased access using middleware
   
 - **Student Management**:
 - Create, Update, View and Delete students

@@ -102,44 +102,66 @@
                                 <div class="card-header">
                                     <h6 class="mb-0">ACADEMIC INFORMATION</h6>
                                 </div>
-                                <div class="card-body row">
-                                    <div class="col-6">
-                                        <label class="form-label">Course / Program</label>
-                                        <select class="form-select" name="course">
-                                            <option selected>Select</option>
-                                            <option {{ old('course', $student->course) == 'cs' ? 'selected' : '' }}
-                                                value="CS">CS</option>
-                                            <option {{ old('course', $student->course) == 'design' ? 'selected' : '' }}
-                                                value="Design">Design</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Batch / Class</label>
-                                        <select class="form-select" name="batch">
-                                            <option selected>Select</option>
-                                            <option {{ old('batch', $student->course) == 'cs' ? 'selected' : '' }}
-                                                value="CS">CS</option>
-                                            <option {{ old('batch', $student->course) == 'design' ? 'selected' : '' }}
-                                                value="Design">Design</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Enroll Date</label>
-                                        <input type="date" name="enroll_date" class="form-control"
-                                            value="{{ $student->enroll_date }}">
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Status</label>
-                                        <select class="form-select" name="status">
-                                            <option selected>Select</option>
-                                            <option {{ old('status', $student->status) == 'active' ? 'selected' : '' }}
-                                                value="active">Active</option>
-                                            <option {{ old('status', $student->status) == 'inactive' ? 'selected' : '' }}
-                                                value="inactive">Inactive</option>
-                                        </select>
-                                    </div>
+
+                                <div class="card-body">
+                                    @forelse ($student->enrollments as $enrollment)
+                                        <div class="border rounded p-3 mb-3">
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label class="form-label">Course</label>
+                                                    <select class="form-select"
+                                                        name="enrollments[{{ $enrollment->id }}][course_id]">
+                                                        @foreach ($courses as $course)
+                                                            <option value="{{ $course->id }}"
+                                                                {{ $enrollment->course_id == $course->id ? 'selected' : '' }}>
+                                                                {{ $course->course_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label class="form-label">Batch</label>
+                                                    <select class="form-select"
+                                                        name="enrollments[{{ $enrollment->id }}][batch_id]">
+                                                        @foreach ($batches as $batch)
+                                                            <option value="{{ $batch->id }}"
+                                                                {{ $enrollment->batch_id == $batch->id ? 'selected' : '' }}>
+                                                                {{ $batch->batch_name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-6 mt-3">
+                                                    <label class="form-label">Enroll Date</label>
+                                                    <input type="date" class="form-control"
+                                                        name="enrollments[{{ $enrollment->id }}][enroll_date]"
+                                                        value="{{ $enrollment->created_at->format('Y-m-d') }}">
+                                                </div>
+
+                                                <div class="col-6 mt-3">
+                                                    <label class="form-label">Status</label>
+                                                    <select class="form-select"
+                                                        name="enrollments[{{ $enrollment->id }}][status]">
+                                                        <option value="active"
+                                                            {{ $enrollment->status == 'active' ? 'selected' : '' }}>Active
+                                                        </option>
+                                                        <option value="inactive"
+                                                            {{ $enrollment->status == 'inactive' ? 'selected' : '' }}>
+                                                            Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @empty
+                                        <p class="text-muted">Student is not enrolled in any course</p>
+                                    @endforelse
                                 </div>
                             </div>
+
 
                             <!-- PARENT/GUARDIAN INFORMATION -->
                             <div class="card shadow-none border mb-3">
@@ -229,18 +251,16 @@
                 <div class="card shadow-sm border-0 overflow-hidden">
                     <div class="card-body">
                         <div class="profile-avatar text-center">
-                                @if($student->profile_image)
-                                    <img src="{{ asset('storage/'.$student->profile_image) }}"
-                                        width="120" height="120"
-                                        style="border-radius:50%">
-                                @else
-                                    <img src="{{ asset() }}"
-                                        width="50" height="50">
-                                @endif
+                            @if ($student->profile_image)
+                                <img src="{{ asset('storage/' . $student->profile_image) }}" width="120" height="120"
+                                    style="border-radius:50%">
+                            @else
+                                <img src="{{ asset() }}" width="50" height="50">
+                            @endif
                         </div>
 
                         <div class="text-center mt-4">
-                            <h4 class="mb-1">{{ $student->first_name. ' ' . $student->last_name  }}</h4>
+                            <h4 class="mb-1">{{ $student->first_name . ' ' . $student->last_name }}</h4>
                             <p class="mb-0 text-secondary">{{ $student->address }}</p>
                             <div class="mt-4"></div>
                             <h6 class="mb-1">Course - {{ $student->course }}</h6>

@@ -47,17 +47,26 @@ class Teacher extends Model
 
     public function assignments()
     {
+        return $this->hasMany(TeacherAssignment::class,'teacher_id');
+    }
+    public function teacherAssignments()
+    {
         return $this->hasMany(TeacherAssignment::class);
     }
-
     public function attendances()
     {
         return $this->hasMany(TeacherAttendance::class);
     }
     public function batches()
     {
-        return $this->belongsToMany(Batch::class,'batch_teacher');
+        return $this->belongsToMany( Batch::class,'teacher_assignments','teacher_id','batch_id')
+        ->withPivot('subject_id', 'status')->withTimestamps()->distinct();
     }
 
+    public function subjects()
+    {
+        return $this->belongsToMany(Subjects::class,'teacher_assignments','teacher_id','subject_id' )
+        ->withPivot('batch_id', 'status')->distinct();
+    }
 
 }

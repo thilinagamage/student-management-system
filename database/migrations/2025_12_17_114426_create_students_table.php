@@ -28,14 +28,14 @@ return new class extends Migration
             $table->string('nic_number')->unique()->nullable();
 
             //Conrtact details
-            $table->integer('phone_number')->nullable();
-            $table->integer('whatsapp_number')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('whatsapp_number')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('address')->nullable();
 
             //Academic details
-            $table->enum('course', ['cs', 'design'])->nullable();
-            $table->enum('batch',['cs', 'design'])->nullable();
+            $table->foreignId('course_id')->nullable()->constrained('courses')->nullOnDelete();
+            $table->foreignId('batch_id')->nullable()->constrained('batches')->nullOnDelete();
             $table->date('enrollment_date')->nullable();
             $table->enum('status', ['active', 'inactive', 'graduated'])->default('active');
 

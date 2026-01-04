@@ -20,14 +20,12 @@ class Course extends Model
         'status',
     ];
 
-    /**
-     * Course belongs to a Course Type
-     */
+   
     public function courseType()
     {
         return $this->belongsTo(CourseType::class);
     }
-    
+
         public function subjects()
     {
         return $this->hasMany(Subjects::class);

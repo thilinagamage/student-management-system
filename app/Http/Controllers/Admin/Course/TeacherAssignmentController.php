@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 
 class TeacherAssignmentController extends Controller
 {
-    /**
-     * List all teacher assignments
-     */
+
     public function index()
     {
         $assignments = TeacherAssignment::with([
@@ -25,9 +23,7 @@ class TeacherAssignmentController extends Controller
         return view('admin.teacher-assignments.index', compact('assignments'));
     }
 
-    /**
-     * Show create assignment form
-     */
+
     public function create()
     {
         $batches  = Batch::with('course')->where('status', 'active')->get();
@@ -40,9 +36,6 @@ class TeacherAssignmentController extends Controller
         );
     }
 
-    /**
-     * Store teacher assignment
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -91,15 +84,11 @@ class TeacherAssignmentController extends Controller
 
 
 
-    /**
-     * Delete assignment (optional)
-     */
+
     public function delete($id)
     {
         TeacherAssignment::findOrFail($id)->delete();
 
         return back()->with('success', 'Assignment deleted');
     }
-
-
 }

@@ -6,6 +6,7 @@ use App\Models\Attendance\TeacherAttendance;
 use App\Models\Academic\Batch;
 use App\Models\Academic\Course;
 use App\Models\Academic\TeacherAssignment;
+use App\Models\People\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,8 +31,11 @@ class Subjects extends Model
             Batch::class,
             'batch_subjects',
             'subjects_id',
+            'batch_id',
+            'teacher_assignments',
+            'teacher_id',
             'batch_id'
-        )->withTimestamps();
+        )->withPivot('subject_id','status')->withTimestamps();
     }
     public function teacherAssignments()
     {
@@ -41,6 +45,13 @@ class Subjects extends Model
     public function teacherAttendances()
     {
         return $this->hasMany(TeacherAttendance::class);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(
+            Teacher::class,'teacher_assignments','subject_teacher','subject_id','teacher_id'
+        )->withPivot('batch_id','status');
     }
 
 }

@@ -22,8 +22,5 @@ class StudentAttendanceSession extends Model
         return $this->hasMany(StudentAttendance::class);
     }
 
-    // public function batch()
-    // {
-    //     return $this->belongsTo(Batch::class);
-    // }
+
 }

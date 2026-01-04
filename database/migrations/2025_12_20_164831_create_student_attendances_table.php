@@ -29,12 +29,11 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->unique([
-                'student_id',
-                'batch_id',
-                'subject_id',
-                'attendance_date'
-            ]);
+            $table->unique(
+                ['student_id', 'batch_id', 'subject_id', 'attendance_date'],
+                'uniq_student_attendance'
+            );
+
         });
     }
 

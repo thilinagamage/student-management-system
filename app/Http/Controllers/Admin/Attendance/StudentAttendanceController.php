@@ -17,13 +17,19 @@ class StudentAttendanceController extends Controller
     public function index(Request $request)
     {
         $attendances = StudentAttendance::with(['student', 'batch', 'subject'])
-            ->when($request->student_id, fn($q) =>
+            ->when(
+                $request->student_id,
+                fn($q) =>
                 $q->where('student_id', $request->student_id)
             )
-            ->when($request->batch_id, fn($q) =>
+            ->when(
+                $request->batch_id,
+                fn($q) =>
                 $q->where('batch_id', $request->batch_id)
             )
-            ->when($request->date, fn($q) =>
+            ->when(
+                $request->date,
+                fn($q) =>
                 $q->whereDate('attendance_date', $request->date)
             )
             ->orderBy('attendance_date', 'desc')
@@ -35,26 +41,25 @@ class StudentAttendanceController extends Controller
             'batches'     => Batch::orderBy('batch_code')->get(),
         ]);
     }
-
     public function create(Request $request)
     {
         $batches = Batch::where('status', 'active')->get();
-        $students = collect(); // empty collection
+        $students = collect();
 
         if ($request->filled('batch_id')) {
-            $students = Student::whereHas('batches', function ($q) use ($request) {
-                $q->where('batches.id', $request->batch_id)
-                ->where('batch_student.status', 'active');
+            $batchId = $request->batch_id;
+
+            $students = Student::whereHas('enrollments', function ($q) use ($batchId) {
+                $q->where('batch_id', $batchId)
+                    ->where('status', 'approved');
             })
-            ->orderBy('first_name')
-            ->get();
+                ->orderBy('first_name')
+                ->get();
         }
 
-        return view(
-            'admin.student-attendance.create',
-            compact('batches', 'students')
-        );
+        return view('admin.student-attendance.create', compact('batches', 'students'));
     }
+
 
     public function store(Request $request)
     {
@@ -115,7 +120,7 @@ class StudentAttendanceController extends Controller
                 StudentAttendance::where('id', $attendanceId)
                     ->update([
                         'status'  => $data['status'],
-                        'remarks'=> $data['remarks'] ?? null,
+                        'remarks' => $data['remarks'] ?? null,
                     ]);
             }
         });
@@ -188,10 +193,10 @@ class StudentAttendanceController extends Controller
             DB::raw("SUM(status='late') as late"),
             DB::raw("SUM(status='excused') as excused")
         )
-        ->with(['student', 'batch'])
-        ->groupBy('student_id', 'batch_id', 'month')
-        ->orderBy('month', 'desc')
-        ->get();
+            ->with(['student', 'batch'])
+            ->groupBy('student_id', 'batch_id', 'month')
+            ->orderBy('month', 'desc')
+            ->get();
 
         return view('admin.student-attendance.report', [
             'students'    => Student::orderBy('first_name')->get(),
@@ -248,7 +253,9 @@ class StudentAttendanceController extends Controller
     private function getBatchAttendanceData($request)
     {
         return StudentAttendance::with(['student', 'batch'])
-            ->when($request->batch_id, fn($q) =>
+            ->when(
+                $request->batch_id,
+                fn($q) =>
                 $q->where('batch_id', $request->batch_id)
             )
             ->when(
@@ -286,7 +293,7 @@ class StudentAttendanceController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Header
+        
         $sheet->fromArray([
             'Student',
             'Batch',
@@ -298,7 +305,7 @@ class StudentAttendanceController extends Controller
             'Attendance %'
         ], null, 'A1');
 
-        // Rows
+
         $row = 2;
         foreach ($data as $item) {
             $sheet->fromArray([
@@ -334,5 +341,4 @@ class StudentAttendanceController extends Controller
 
         return $pdf->download('batch-attendance-report.pdf');
     }
-
 }

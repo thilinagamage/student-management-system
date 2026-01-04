@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Academic\Batch;
 use App\Models\People\Student;
 use App\Models\People\Teacher;
 use App\Models\People\Admin;
@@ -32,9 +33,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    /* =========================
-     | Relationships
-     ========================= */
+
 
     public function student()
     {
@@ -52,9 +51,13 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
-    /* =========================
-     | Role Helpers
-     ========================= */
+
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class, 'enrollments', 'student_id', 'batch_id')
+                    ->withTimestamps();
+    }
+
 
     public function isAdmin()
     {
@@ -97,10 +100,6 @@ class User extends Authenticatable
         return $this->permissions->contains('name', $permission);
     }
 
-    /* =========================
-     | Profile Image Accessor
-     | (THIS FIXES YOUR ERROR)
-     ========================= */
 
     public function getProfileImageAttribute()
     {
@@ -114,10 +113,6 @@ class User extends Authenticatable
 
         return $this->attributes['profile_image'] ?? 'default-avatar.png';
     }
-
-    /* =========================
-     | Display Name Accessor
-     ========================= */
 
     public function getDisplayNameAttribute()
     {

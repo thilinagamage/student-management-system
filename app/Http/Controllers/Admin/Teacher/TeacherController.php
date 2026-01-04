@@ -13,14 +13,15 @@ use Illuminate\Support\Facades\Hash;
 class TeacherController extends Controller
 {
 
-    public function dashboard(){
+    public function dashboard()
+    {
         return view('teacher.dashboard');
     }
 
 
     public function index()
     {
-     // Paginate 10 teachers per page
+
         $teachers = Teacher::with('user')->latest()->paginate(10);
         return view('admin.teachers.index', compact('teachers'));
     }
@@ -32,59 +33,58 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
-       try{
-         $request->validate([
-            'username' => 'required|unique:users,username',
-            'login_email' => 'required|email|unique:users,login_email',
-            'password' => 'required|min:8',
-            'dob' => 'required|date',
-            'nic_number' => 'required|unique:teachers,nic_number',
-            'first_name' => 'required',
-            'last_name' => 'required',
-        ]);
-
-        DB::transaction(function () use ($request) {
-
-            $user = User::create([
-                'username' => $request->username,
-                'login_email' => $request->login_email,
-                'password' => Hash::make($request->password),
-                'user_type' => 'teacher',
-                'status' => 'active',
+        try {
+            $request->validate([
+                'username' => 'required|unique:users,username',
+                'login_email' => 'required|email|unique:users,login_email',
+                'password' => 'required|min:8',
+                'dob' => 'required|date',
+                'nic_number' => 'required|unique:teachers,nic_number',
+                'first_name' => 'required',
+                'last_name' => 'required',
             ]);
 
-            $teacherCode = 'TCH' . date('Y') . '-' . str_pad(Teacher::count() + 1, 3, '0', STR_PAD_LEFT);
+            DB::transaction(function () use ($request) {
+
+                $user = User::create([
+                    'username' => $request->username,
+                    'login_email' => $request->login_email,
+                    'password' => Hash::make($request->password),
+                    'user_type' => 'teacher',
+                    'status' => 'active',
+                ]);
+
+                $teacherCode = 'TCH' . date('Y') . '-' . str_pad(Teacher::count() + 1, 3, '0', STR_PAD_LEFT);
 
 
-            $profile_image = null;
+                $profile_image = null;
 
-            if ($request->hasFile('profile_image')) {
-                $profile_image = $request->file('profile_image')->store('profile_images', 'public');
-            }
+                if ($request->hasFile('profile_image')) {
+                    $profile_image = $request->file('profile_image')->store('profile_images', 'public');
+                }
 
-            Teacher::create([
-                'user_id' => $user->id,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'dob' => $request->dob,
-                'teacher_code' => $teacherCode,
-                'nic_number' => $request->nic_number,
-                'phone' => $request->phone,
-                'whatsapp_number' => $request->whatsapp_number,
-                'email' => $request->login_email,
-                'address' => $request->address,
-                'joined_date' => $request->joined_date,
-                'status' => 'active',
-                'username' => $request->username,
-                'login_email' => $request->login_email,
-                'password' => Hash::make($request->password),
-                'profile_image' => $profile_image,
-            ]);
-        });
+                Teacher::create([
+                    'user_id' => $user->id,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'dob' => $request->dob,
+                    'teacher_code' => $teacherCode,
+                    'nic_number' => $request->nic_number,
+                    'phone' => $request->phone,
+                    'whatsapp_number' => $request->whatsapp_number,
+                    'email' => $request->login_email,
+                    'address' => $request->address,
+                    'joined_date' => $request->joined_date,
+                    'status' => 'active',
+                    'username' => $request->username,
+                    'login_email' => $request->login_email,
+                    'password' => Hash::make($request->password),
+                    'profile_image' => $profile_image,
+                ]);
+            });
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher added successfully');
-       }
-            catch(\Exception $e){
+            return redirect()->route('admin.teachers.index')->with('success', 'Teacher added successfully');
+        } catch (\Exception $e) {
             return $e;
         }
     }
@@ -156,8 +156,4 @@ class TeacherController extends Controller
         $teacher = Teacher::with('user')->findOrFail($id);
         return view('admin.teachers.view', compact('teacher'));
     }
-
-
-
-
 }

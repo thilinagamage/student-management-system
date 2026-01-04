@@ -3,6 +3,8 @@
 namespace App\Models\People;
 
 use App\Models\Academic\Batch;
+use App\Models\Academic\Course;
+use App\Models\Academic\Enrollment;
 use App\Models\Attendance\StudentAttendance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -28,8 +30,8 @@ class Student extends Authenticatable
         'whatsapp_number',
         'email',
         'address',
-        'course',
-        'batch',
+        'course_id',
+        'batch_id',
         'enrollment_date',
         'status',
         'parent_guardian_name',
@@ -60,15 +62,25 @@ class Student extends Authenticatable
         return $this->hasMany(StudentAttendance::class);
     }
 
-
     public function batches()
     {
-        return $this->belongsToMany(
-            Batch::class,
-            'batch_student',
-            'student_id',
-            'batch_id'
-        )->withPivot('status');
+        return $this->belongsToMany(Batch::class,'batch_student','student_id','batch_id')->withPivot('status')->withTimestamps();;
+    }
+
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class, 'batch_id');
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
     }
 
 

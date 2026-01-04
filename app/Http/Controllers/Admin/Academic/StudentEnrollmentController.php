@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Academic;
 
 use App\Http\Controllers\Controller;
 use App\Models\Academic\Batch;
+use App\Models\Academic\Enrollment;
 use App\Models\People\Student;
 use Illuminate\Http\Request;
 
@@ -12,11 +13,11 @@ class StudentEnrollmentController extends Controller
 
     public function index()
     {
-    $enrollments = Student::with([
-        'batches' => function ($q) {
-            $q->withPivot('created_at')->orderBy('pivot_created_at', 'desc');
-        }
-    ])->whereHas('batches')->get();
+        $enrollments = Student::with([
+            'batches' => function ($q) {
+                $q->withPivot('created_at')->orderBy('pivot_created_at', 'desc');
+            }
+        ])->whereHas('batches')->get();
 
 
         return view('admin.student-enrollment.index', compact('enrollments'));
@@ -60,7 +61,7 @@ class StudentEnrollmentController extends Controller
         $student = Student::with('batches')->findOrFail($studentId);
         $batches = Batch::orderBy('batch_code')->get();
 
-        // already assigned batch IDs
+
         $assignedBatchIds = $student->batches->pluck('id')->toArray();
 
         return view(
@@ -78,7 +79,7 @@ class StudentEnrollmentController extends Controller
 
         $student = Student::findOrFail($studentId);
 
-        // sync batches (add/remove automatically)
+
         $student->batches()->sync($request->batch_ids);
 
         return redirect()
@@ -90,11 +91,33 @@ class StudentEnrollmentController extends Controller
     {
         $student = Student::findOrFail($studentId);
 
-        // remove from ALL batches
         $student->batches()->detach();
 
         return back()->with('success', 'Student removed from all batches.');
     }
 
-}
 
+    public function studentEnrollmensShow()
+    {
+
+        $enrollments = Enrollment::with(['student', 'course', 'batch'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.student-enrollment.enrollmentsShow', compact('enrollments'));
+    }
+
+    public function enrollmentApprove(Enrollment $enrollment)
+    {
+        $enrollment->update(['status' => 'approved']);
+
+        return back()->with('success', 'Enrollment approved successfully.');
+    }
+
+    public function enrollmentCancel(Enrollment $enrollment)
+    {
+        $enrollment->update(['status' => 'cancelled']);
+
+        return back()->with('error', 'Enrollment cancelled.');
+    }
+}

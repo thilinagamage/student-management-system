@@ -14,16 +14,13 @@ class BatchController extends Controller
     public function index()
     {
         $batches = Batch::with('course')
-                        ->latest()
-                        ->get();
+            ->latest()
+            ->get();
 
         return view('admin.batches.index', compact('batches'));
-
     }
 
-    /* ===============================
-       CREATE – Show Form
-    =============================== */
+
     public function create()
     {
         $courses = Course::where('status', 'active')->get();
@@ -31,9 +28,6 @@ class BatchController extends Controller
         return view('admin.batches.create', compact('courses'));
     }
 
-    /* ===============================
-       STORE – Save Batch
-    =============================== */
     public function store(Request $request)
     {
         $request->validate([
@@ -53,19 +47,15 @@ class BatchController extends Controller
             ->with('success', 'Batch created successfully');
     }
 
-    /* ===============================
-       VIEW – Single Batch
-    =============================== */
-public function show($id)
-{
-    $batch = Batch::with(['course', 'subjects'])->findOrFail($id);
 
-    return view('admin.batches.view', compact('batch'));
-}
+    public function show($id)
+    {
+        $batch = Batch::with(['course', 'subjects'])->findOrFail($id);
 
-    /* ===============================
-       EDIT – Show Edit Form
-    =============================== */
+        return view('admin.batches.view', compact('batch'));
+    }
+
+
     public function edit($id)
     {
         $batch = Batch::findOrFail($id);
@@ -73,11 +63,9 @@ public function show($id)
         $teachers = Teacher::where('status', 'active')->get();
 
         return view('admin.batches.edit', compact('batch', 'courses', 'teachers'));
-        }
+    }
 
-    /* ===============================
-       UPDATE – Save Changes
-    =============================== */
+
     public function update(Request $request, $id)
     {
         $batch = Batch::findOrFail($id);
@@ -99,9 +87,7 @@ public function show($id)
             ->with('success', 'Batch updated successfully');
     }
 
-    /* ===============================
-       DELETE – Remove Batch
-    =============================== */
+
     public function delete($id)
     {
         $batch = Batch::findOrFail($id);
@@ -116,7 +102,7 @@ public function show($id)
     public function subjectsByBatch(Batch $batch)
     {
         return response()->json(
-            $batch->course->subjects()->where('status','active')->get()
+            $batch->course->subjects()->where('status', 'active')->get()
         );
     }
 
@@ -128,6 +114,4 @@ public function show($id)
 
         return view('teacher.batches.index', compact('batches'));
     }
-
-
 }

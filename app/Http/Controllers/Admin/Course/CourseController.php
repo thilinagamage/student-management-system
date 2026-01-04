@@ -16,9 +16,7 @@ class CourseController extends Controller
         return view('admin.course.index', compact('courses'));
     }
 
-    /**
-     * Show create course form
-     */
+
     public function create()
     {
         $courseTypes = CourseType::where('status', 'active')->get();
@@ -26,9 +24,7 @@ class CourseController extends Controller
         return view('admin.course.create', compact('courseTypes'));
     }
 
-    /**
-     * Store new course
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -58,9 +54,7 @@ class CourseController extends Controller
             ->with('success', 'Course created successfully');
     }
 
-    /**
-     * Show edit course form
-     */
+
     public function edit($id)
     {
         $course = Course::findOrFail($id);
@@ -69,9 +63,7 @@ class CourseController extends Controller
         return view('admin.course.edit', compact('course', 'courseTypes'));
     }
 
-    /**
-     * Update course
-     */
+
     public function update(Request $request, $id)
     {
         $course = Course::findOrFail($id);
@@ -111,9 +103,6 @@ class CourseController extends Controller
     }
 
 
-    /**
-     * Delete course (soft delete recommended)
-     */
     public function destroy($id)
     {
         $course = Course::findOrFail($id);

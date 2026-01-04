@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\People\Admin;
 use App\Models\Permission\Permission;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,28 +15,28 @@ class AdminController extends Controller
     public function permissions(User $admin)
     {
         $permissions = Permission::all();
-        return view('admin.admin.permissions', compact('admin','permissions'));
+        return view('admin.admin.permissions', compact('admin', 'permissions'));
     }
 
     public function updatePermissions(Request $request, User $admin)
     {
         $admin->permissions()->sync($request->permissions ?? []);
-        return back()->with('success','Permissions updated');
+        return back()->with('success', 'Permissions updated');
     }
 
-    public function adminDashboard(){
-        return view('admin.dashboard');
-    }
 
-    public function studentDashboard(){
+    public function studentDashboard()
+    {
         return view('student.dashboard');
     }
 
-      public function index()
+    public function index()
     {
         $admins = User::where('user_type', 'admin')->latest()->get();
         return view('admin.admins.index', compact('admins'));
     }
+
+
 
     public function create()
     {
@@ -52,7 +53,7 @@ class AdminController extends Controller
 
         User::create([
             'username'   => $request->username,
-            'login_email'=> $request->login_email,
+            'login_email' => $request->login_email,
             'password'   => Hash::make($request->password),
             'user_type'  => 'admin',
             'status'     => 'active',
@@ -104,7 +105,14 @@ class AdminController extends Controller
             ->with('success', 'Admin deleted successfully');
     }
 
-        public function profile()
+
+    public function show($id)
+    {
+        $admin = Admin::findOrFail($id);
+        return view('admin.admins.view', compact('admin'));
+    }
+
+    public function profile()
     {
         return view('admin.profile');
     }
@@ -132,5 +140,4 @@ class AdminController extends Controller
 
         return back()->with('success', 'Profile updated successfully');
     }
-
 }

@@ -31,7 +31,7 @@
 
         {{-- My Enrollment --}}
         <li>
-            <a href="">
+            <a href="{{ route('student.enrollments.index') }}">
                 <div class="parent-icon"><i class="bi bi-journal-check"></i></div>
                 <div class="menu-title">My Enrollment</div>
             </a>
@@ -39,7 +39,7 @@
 
         {{-- Attendance --}}
         <li>
-            <a href="">
+            <a href="{{ route('student.attendance.index') }}">
                 <div class="parent-icon"><i class="bi bi-award-fill"></i></div>
                 <div class="menu-title">My Attendance</div>
             </a>
@@ -53,14 +53,6 @@
             </a>
         </li>
 
-        {{-- Logout --}}
-        <li>
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <div class="parent-icon"><i class="bi bi-box-arrow-right"></i></div>
-                <div class="menu-title">Logout</div>
-            </a>
-        </li>
 
     </ul>
 </aside>

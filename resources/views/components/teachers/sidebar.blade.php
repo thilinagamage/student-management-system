@@ -35,11 +35,7 @@
                         <i class="bi bi-circle"></i>My Batches
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('teacher.subjects') }}">
-                        <i class="bi bi-circle"></i>My Subjects
-                    </a>
-                </li>
+
             </ul>
         </li>
 
@@ -59,38 +55,21 @@
             </a>
             <ul>
                 <li>
-                    <a href="{{ route('teacher.attendance.create') }}">
-                        <i class="bi bi-circle"></i>Mark Attendance
+                    <a href="{{ route('teacher.teacher-attendance.index') }}">
+                        <i class="bi bi-circle"></i>My Attendance
+                    </a>
+                <li>
+                    <a href="{{ route('teacher.student-attendance.create') }}">
+                        <i class="bi bi-circle"></i>Mark Student Attendance
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('teacher.attendance.index') }}">
-                        <i class="bi bi-circle"></i>View Attendance
+                    <a href="{{ route('teacher.student-attendance.index') }}">
+                        <i class="bi bi-circle"></i>View Student Attendance
                     </a>
                 </li>
             </ul>
         </li>
-
-        <!-- Results / Marks -->
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bi bi-bar-chart-fill"></i></div>
-                <div class="menu-title">Results</div>
-            </a>
-            <ul>
-                <li>
-                    <a href="">
-                        <i class="bi bi-circle"></i>Add Results
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="bi bi-circle"></i>View Results
-                    </a>
-                </li>
-            </ul>
-        </li>
-
         <!-- Profile -->
         <li>
             <a href="{{ route('profile') }}">

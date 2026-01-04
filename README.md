@@ -4,7 +4,10 @@ A simple Java-based console application for managing student records with file-b
 
 ## Features
 
-- **Add Student**: Create new student records with name, ID, age, and grade
+- **Authenticarion & Roles**:
+-  Admin, Teacher, Student user roles
+-  Secure login & logout
+-  Rolebased access using middleware
 - **View Students**: Display all registered students in a formatted table
 - **Update Student**: Modify existing student information
 - **Delete Student**: Remove student records from the system

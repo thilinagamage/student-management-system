@@ -2,8 +2,8 @@
 
 namespace App\Models\Academic;
 
-use App\Models\People\Student;
 use App\Models\Attendance\TeacherAttendance;
+use App\Models\People\Student;
 use App\Models\People\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,10 +22,10 @@ class Batch extends Model
         'status',
     ];
 
-    // ✅ ADD THIS
+
     protected $casts = [
         'start_date' => 'date',
-        'end_date'   => 'date',
+        'end_date' => 'date',
     ];
 
     public function course()
@@ -35,7 +35,7 @@ class Batch extends Model
 
     public function subjects()
     {
-        return $this->belongsToMany(Subjects::class,'batch_subjects','batch_id','subjects_id');
+        return $this->belongsToMany(  Subjects::class, 'batch_subjects', 'batch_id', 'subject_id' );
     }
 
     public function teacherAssignments()
@@ -48,16 +48,20 @@ class Batch extends Model
         return $this->hasMany(TeacherAttendance::class);
     }
 
-
-    public function students()
+    public function batches()
     {
-        return $this->belongsToMany(Student::class,'batch_student','batch_id','student_id')->withPivot('status');
+        return $this->belongsToMany(Batch::class,'batch_student' );
     }
-
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class,'batch_teacher');
+        return $this->belongsToMany(Teacher::class, 'batch_teacher', 'teacher_assignments', 'batch_id', 'teacher_id')
+            ->withPivot('subject_id', 'status');
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'enrollments', 'batch_id', 'student_id')
+            ->withPivot('status')->withTimestamps();
+    }
 }

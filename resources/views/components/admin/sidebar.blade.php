@@ -22,22 +22,34 @@
         </li>
 
         {{-- SUPER ADMIN ONLY --}}
-        @if(auth()->user()->isSuperAdmin())
-        <li class="menu-label">System Management</li>
+        @if (auth()->user()->isSuperAdmin())
+            <li class="menu-label">System Management</li>
 
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="bi bi-shield-lock-fill"></i></div>
-                <div class="menu-title">Admin Management</div>
-            </a>
-            <ul>
-                <li><a href="{{ route('admin.admins.create') }}"><i class="bi bi-circle"></i>Add Admin</a></li>
-                <li><a href="{{ route('admin.admins.index') }}"><i class="bi bi-circle"></i>View Admins</a></li>
-            </ul>
-        </li>
+            <li>
+                <a href="javascript:;" class="has-arrow">
+                    <div class="parent-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                    <div class="menu-title">Admin Management</div>
+                </a>
+                <ul>
+                    <li><a href="{{ route('admin.admins.create') }}"><i class="bi bi-circle"></i>Add Admin</a></li>
+                    <li><a href="{{ route('admin.admins.index') }}"><i class="bi bi-circle"></i>View Admins</a></li>
+                </ul>
+            </li>
         @endif
 
         {{-- STUDENT MANAGEMENT --}}
+        <li class="menu-label">Admins Management</li>
+
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bi bi-people-fill"></i></div>
+                <div class="menu-title">Admins</div>
+            </a>
+            <ul>
+                <li><a href="{{ route('admin.admins.index') }}"><i class="bi bi-circle"></i>Manage Admins</a></li>
+                <li><a href="{{ route('admin.admins.create') }}"><i class="bi bi-circle"></i>Add Admin</a></li>
+            </ul>
+        </li>
         <li class="menu-label">Academic Management</li>
 
         <li>
@@ -52,8 +64,8 @@
                 <li class="has-arrow">
                     <a href="javascript:;"><i class="bi bi-circle"></i>Enrollments</a>
                     <ul>
-                        <li><a href="{{ route('admin.student-enrollment.create') }}">Create Enrollment</a></li>
-                        <li><a href="{{ route('admin.student-enrollment.index') }}">View Enrollments</a></li>
+                        <li><a href="">Create Enrollment</a></li>
+                        <li><a href="{{ route('admin.enrollments.show') }}">View Enrollments</a></li>
                     </ul>
                 </li>
             </ul>
@@ -68,7 +80,8 @@
             <ul>
                 <li><a href="{{ route('admin.teachers.create') }}"><i class="bi bi-circle"></i>Add Teacher</a></li>
                 <li><a href="{{ route('admin.teachers.index') }}"><i class="bi bi-circle"></i>Manage Teachers</a></li>
-                <li><a href="{{ route('admin.teacher-assignments.index') }}"><i class="bi bi-circle"></i>Assignments</a></li>
+                <li><a href="{{ route('admin.teacher-assignments.index') }}"><i class="bi bi-circle"></i>Assignments</a>
+                </li>
             </ul>
         </li>
 
@@ -87,6 +100,7 @@
                     <ul>
                         <li><a href="{{ route('admin.batches.index') }}">Manage Batches</a></li>
                         <li><a href="{{ route('admin.batches.create') }}">Add Batch</a></li>
+
                     </ul>
                 </li>
 
@@ -108,10 +122,12 @@
             </a>
             <ul>
                 <li>
-                    <a href="{{ route('admin.teacher-attendance.index') }}"><i class="bi bi-circle"></i>Teacher Attendance</a>
+                    <a href="{{ route('admin.teacher-attendance.index') }}"><i class="bi bi-circle"></i>Teacher
+                        Attendance</a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.student-attendance.index') }}"><i class="bi bi-circle"></i>Student Attendance</a>
+                    <a href="{{ route('admin.student-attendance.index') }}"><i class="bi bi-circle"></i>Student
+                        Attendance</a>
                 </li>
             </ul>
         </li>

@@ -15,39 +15,35 @@ use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
-
-
 class TeacherAttendanceController extends Controller
 {
-public function index(Request $request)
-{
-    $attendances = TeacherAttendance::with(['teacher', 'batch', 'subject'])
-        ->when($request->teacher_id, function ($q) use ($request) {
-            $q->where('teacher_id', $request->teacher_id);
-        })
-        ->when($request->batch_id, function ($q) use ($request) {
-            $q->where('batch_id', $request->batch_id);
-        })
-        ->when($request->date, function ($q) use ($request) {
-            $q->whereDate('attendance_date', $request->date);
-        })
-        ->orderBy('attendance_date', 'desc')
-        ->get();
+    public function index(Request $request)
+    {
+        $attendances = TeacherAttendance::with(['teacher', 'batch', 'subject'])
+            ->when($request->teacher_id, function ($q) use ($request) {
+                $q->where('teacher_id', $request->teacher_id);
+            })
+            ->when($request->batch_id, function ($q) use ($request) {
+                $q->where('batch_id', $request->batch_id);
+            })
+            ->when($request->date, function ($q) use ($request) {
+                $q->whereDate('attendance_date', $request->date);
+            })
+            ->orderBy('attendance_date', 'desc')
+            ->get();
 
-    $teachers = Teacher::orderBy('first_name')->get();
-    $batches  = Batch::orderBy('batch_name')->get();
+        $teachers = Teacher::orderBy('first_name')->get();
+        $batches  = Batch::orderBy('batch_name')->get();
 
-    return view('admin.teacher-attendance.index', compact(
-        'attendances',
-        'teachers',
-        'batches'
-    ));
-}
+        return view('admin.teacher-attendance.index', compact(
+            'attendances',
+            'teachers',
+            'batches'
+        ));
+    }
 
 
-    /**
-     * Show create attendance form
-     */
+
     public function create(Request $request)
     {
         $batches = Batch::where('status', 'active')->get();
@@ -57,9 +53,9 @@ public function index(Request $request)
         // Only load when batch is selected
         if ($request->filled('batch_id')) {
             $assignments = TeacherAssignment::with([
-                    'teacher',
-                    'subject'
-                ])
+                'teacher',
+                'subject'
+            ])
                 ->where('batch_id', $request->batch_id)
                 ->where('status', 'active')
                 ->get();
@@ -71,9 +67,7 @@ public function index(Request $request)
         );
     }
 
-    /**
-     * Store attendance
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -112,7 +106,6 @@ public function index(Request $request)
             return redirect()
                 ->route('admin.teacher-attendance.index')
                 ->with('success', 'Teacher attendance saved successfully.');
-
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -122,9 +115,7 @@ public function index(Request $request)
                 ->withInput();
         }
     }
-    /**
-     * Edit attendance
-     */
+
     public function edit($id)
     {
         $attendance = TeacherAttendance::findOrFail($id);
@@ -132,24 +123,32 @@ public function index(Request $request)
         return view('admin.teacher-attendance.edit', compact('attendance'));
     }
 
-    /**
-     * Update attendance
-     */
+
     public function update(Request $request, $id)
     {
         $attendance = TeacherAttendance::findOrFail($id);
 
-        $attendance->update([
-            'status'     => $request->status,
-            'start_time' => $request->start_time,
-            'end_time'   => $request->end_time,
-            'remarks'    => $request->remarks,
+        $request->validate([
+            'attendance_date' => 'required|date',
+            'status'          => 'required|in:present,absent,late,cancelled',
+            'start_time'      => 'nullable',
+            'end_time'        => 'nullable',
+            'remarks'         => 'nullable|string|max:255',
         ]);
+
+        $attendance->update($request->only([
+            'attendance_date',
+            'status',
+            'start_time',
+            'end_time',
+            'remarks',
+        ]));
 
         return redirect()
             ->route('admin.teacher-attendance.index')
             ->with('success', 'Attendance updated successfully');
     }
+
 
 
 
@@ -173,50 +172,60 @@ public function index(Request $request)
         $subjects = Subjects::orderBy('subject_name')->get();
 
         $monthlySummary = TeacherAttendance::select(
-        DB::raw("DATE_FORMAT(attendance_date, '%Y-%m') as month"),
-        DB::raw("SUM(status = 'present') as present"),
-        DB::raw("SUM(status = 'absent') as absent"),
-        DB::raw("SUM(status = 'late') as late"),
-        DB::raw("SUM(status = 'cancelled') as cancelled")
+            DB::raw("DATE_FORMAT(attendance_date, '%Y-%m') as month"),
+            DB::raw("SUM(status = 'present') as present"),
+            DB::raw("SUM(status = 'absent') as absent"),
+            DB::raw("SUM(status = 'late') as late"),
+            DB::raw("SUM(status = 'cancelled') as cancelled")
         )
-        ->when($request->teacher_id, fn($q) =>
-            $q->where('teacher_id', $request->teacher_id)
-        )
-        ->when($request->batch_id, fn($q) =>
-            $q->where('batch_id', $request->batch_id)
-        )
-        ->when($request->from_date && $request->to_date, fn($q) =>
-            $q->whereBetween('attendance_date', [
-                $request->from_date,
-                $request->to_date
-            ])
-        )
-        ->groupBy('month')
-        ->orderBy('month', 'desc')
-        ->get();
+            ->when(
+                $request->teacher_id,
+                fn($q) =>
+                $q->where('teacher_id', $request->teacher_id)
+            )
+            ->when(
+                $request->batch_id,
+                fn($q) =>
+                $q->where('batch_id', $request->batch_id)
+            )
+            ->when(
+                $request->from_date && $request->to_date,
+                fn($q) =>
+                $q->whereBetween('attendance_date', [
+                    $request->from_date,
+                    $request->to_date
+                ])
+            )
+            ->groupBy('month')
+            ->orderBy('month', 'desc')
+            ->get();
 
 
 
         $teacherSummary = TeacherAttendance::select(
-        'teacher_id',
-        DB::raw("SUM(status = 'present') as present"),
-        DB::raw("SUM(status = 'absent') as absent"),
-        DB::raw("SUM(status = 'late') as late"),
-        DB::raw("SUM(status = 'cancelled') as cancelled"),
-        DB::raw("COUNT(*) as total")
+            'teacher_id',
+            DB::raw("SUM(status = 'present') as present"),
+            DB::raw("SUM(status = 'absent') as absent"),
+            DB::raw("SUM(status = 'late') as late"),
+            DB::raw("SUM(status = 'cancelled') as cancelled"),
+            DB::raw("COUNT(*) as total")
         )
-        ->with('teacher')
-        ->when($request->batch_id, fn($q) =>
-            $q->where('batch_id', $request->batch_id)
-        )
-        ->when($request->from_date && $request->to_date, fn($q) =>
-            $q->whereBetween('attendance_date', [
-                $request->from_date,
-                $request->to_date
-            ])
-        )
-        ->groupBy('teacher_id')
-        ->get();
+            ->with('teacher')
+            ->when(
+                $request->batch_id,
+                fn($q) =>
+                $q->where('batch_id', $request->batch_id)
+            )
+            ->when(
+                $request->from_date && $request->to_date,
+                fn($q) =>
+                $q->whereBetween('attendance_date', [
+                    $request->from_date,
+                    $request->to_date
+                ])
+            )
+            ->groupBy('teacher_id')
+            ->get();
 
 
         // 🔹 Attendance query
@@ -256,13 +265,13 @@ public function index(Request $request)
         return view(
             'admin.teacher-attendance.report',
             compact(
-            'teachers',
-            'batches',
-            'subjects',
-            'attendances',
-            'summary',
-            'monthlySummary',
-            'teacherSummary'
+                'teachers',
+                'batches',
+                'subjects',
+                'attendances',
+                'summary',
+                'monthlySummary',
+                'teacherSummary'
 
             )
         );
@@ -302,5 +311,4 @@ public function index(Request $request)
     {
         return TeacherAttendanceExcelExport::export($request);
     }
-
 }

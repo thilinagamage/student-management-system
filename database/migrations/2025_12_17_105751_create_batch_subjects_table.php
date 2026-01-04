@@ -15,17 +15,18 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('batch_id')
-                  ->constrained('batches')
-                  ->cascadeOnDelete();
+                ->constrained('batches')
+                ->cascadeOnDelete();
 
-            $table->foreignId('subjects_id')
-                  ->constrained('subjects')
-                  ->cascadeOnDelete();
+            $table->foreignId('subject_id')
+                ->constrained('subjects')
+                ->cascadeOnDelete();
 
             $table->timestamps();
 
-            $table->unique(['batch_id', 'subjects_id']);
+            $table->unique(['batch_id', 'subject_id']);
         });
+
     }
 
     public function down(): void

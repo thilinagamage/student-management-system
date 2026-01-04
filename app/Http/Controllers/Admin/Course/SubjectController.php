@@ -17,7 +17,7 @@ class SubjectController extends Controller
 
     public function create()
     {
-        $courses = Course::where('status','active')->get();
+        $courses = Course::where('status', 'active')->get();
         return view('admin.subjects.create', compact('courses'));
     }
 
@@ -32,15 +32,15 @@ class SubjectController extends Controller
         Subjects::create($request->all());
 
         return redirect()->route('admin.subjects.index')
-            ->with('success','Subject created successfully');
+            ->with('success', 'Subject created successfully');
     }
 
     public function edit($id)
     {
         $subject = Subjects::findOrFail($id);
-        $courses = Course::where('status','active')->get();
+        $courses = Course::where('status', 'active')->get();
 
-        return view('admin.subjects.edit', compact('subject','courses'));
+        return view('admin.subjects.edit', compact('subject', 'courses'));
     }
 
     public function update(Request $request, $id)
@@ -50,13 +50,13 @@ class SubjectController extends Controller
         $request->validate([
             'course_id' => 'required',
             'subject_name' => 'required',
-            'subject_code' => 'required|unique:subjects,subject_code,'.$id
+            'subject_code' => 'required|unique:subjects,subject_code,' . $id
         ]);
 
         $subject->update($request->all());
 
         return redirect()->route('admin.subjects.index')
-            ->with('success','Subject updated successfully');
+            ->with('success', 'Subject updated successfully');
     }
 
     public function show($id)
@@ -71,7 +71,7 @@ class SubjectController extends Controller
         $subject->delete();
 
         return redirect()->route('admin.subjects.index')
-            ->with('success','Subject deleted successfully');
+            ->with('success', 'Subject deleted successfully');
     }
 
     public function subjects()
@@ -82,5 +82,4 @@ class SubjectController extends Controller
 
         return view('teacher.subjects.index', compact('subjects'));
     }
-
 }

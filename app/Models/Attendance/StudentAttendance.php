@@ -21,18 +21,29 @@ class StudentAttendance extends Model
         'remarks',
     ];
 
+    protected $casts = [
+    'attendance_date' => 'date',
+    ];
+
+
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class,'student_id');
     }
 
-    public function batch()
+
+        public function batch()
     {
-        return $this->belongsTo(Batch::class);
+        return $this->belongsTo(Batch::class, 'batch_student', 'student_id', 'batch_id');
     }
 
     public function subject()
     {
         return $this->belongsTo(Subjects::class);
     }
+    public function attendanceBatch()
+    {
+        return $this->belongsTo(Batch::class, 'batch_id');
+    }
+
 }

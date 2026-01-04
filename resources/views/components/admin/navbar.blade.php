@@ -67,7 +67,7 @@
                             <p class="user-name mb-0">Guest</p>
                         @endif
 
-                      <small class="mb-0 dropdown-user-designation">HR Manager</small>
+
                     </div>
 
                   </div>
@@ -81,41 +81,9 @@
                          </div>
                        </a>
                     </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                         <div class="d-flex align-items-center">
-                           <div class=""><i class="bi bi-gear-fill"></i></div>
-                           <div class="ms-3"><span>Setting</span></div>
-                         </div>
-                       </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="index2.html">
-                         <div class="d-flex align-items-center">
-                           <div class=""><i class="bi bi-speedometer"></i></div>
-                           <div class="ms-3"><span>Dashboard</span></div>
-                         </div>
-                       </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                         <div class="d-flex align-items-center">
-                           <div class=""><i class="bi bi-piggy-bank-fill"></i></div>
-                           <div class="ms-3"><span>Earnings</span></div>
-                         </div>
-                       </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                         <div class="d-flex align-items-center">
-                           <div class=""><i class="bi bi-cloud-arrow-down-fill"></i></div>
-                           <div class="ms-3"><span>Downloads</span></div>
-                         </div>
-                       </a>
-                    </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-<form action="{{ route('logout') }}" method="POST">
+                    <form action="{{ route('logout') }}" method="POST">
                 @csrf
                 <button class="dropdown-item text-danger" type="submit">
                     <i class="bi bi-box-arrow-right me-2"></i> Logout

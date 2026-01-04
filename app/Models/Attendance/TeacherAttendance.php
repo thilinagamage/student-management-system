@@ -22,6 +22,10 @@ class TeacherAttendance extends Model
         'end_time',
         'remarks',
     ];
+    protected $casts = [
+    'attendance_date' => 'datetime:Y-m-d',
+    ] ;
+
 
     public function teacher()
     {

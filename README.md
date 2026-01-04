@@ -38,3 +38,12 @@ A simple Java-based console application for managing student records with file-b
     php artisan db:seed --class=SuperAdminSeeder
     php artisan db:seed --class=PermissionSeeder
     php artisan serve
+
+
+## Demo Admin Account
+
+    ```bash
+    Email : superadmin@system.com
+    password: password
+
+
